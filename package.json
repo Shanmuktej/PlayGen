@@ -9,7 +9,7 @@
     "headless": "npx playwright test",
     "report": "npx playwright show-report",
     "codegen": "npx playwright codegen",
-    "setup": "npm i && npm i --save-dev @types/node"
+    "setup": "npm i && npx playwright install && npm i --save-dev @types/node"
   },
   "keywords": [],
   "author": "",
