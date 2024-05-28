@@ -12,7 +12,7 @@
     "setup": "npm i && npx playwright install && npm i --save-dev @types/node"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anem Shanmuka Chandra Teja",
   "license": "ISC",
   "dependencies": {
     "@playwright/test": "^1.42.1"
