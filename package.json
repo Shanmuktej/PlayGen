@@ -16,7 +16,7 @@
     "letcode:headed": "npx playwright test --headed --project=LetCode"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anem Shanmuka Chandra Teja",
   "license": "ISC",
   "dependencies": {
     "@playwright/test": "^1.42.1"
