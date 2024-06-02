@@ -1,10 +1,13 @@
 import { LoginPage } from '@pages/login.page';
+import { PlaywrightPage } from '@pages/playwright.page';
 import test, { Page, Locator, Response } from '@playwright/test';
 export let page: Page
 
 type FixtureTypes = {
   page: Page,
-  login: LoginPage
+  playwrightPage: PlaywrightPage,
+  user1: LoginPage
+  user2: LoginPage
 }
 export const scenario = test.extend<FixtureTypes>({
   page: async ({ page: basePage }, use) => {
@@ -12,12 +15,31 @@ export const scenario = test.extend<FixtureTypes>({
     await page.goto('/')
     await use(page);
   },
-  login: async ({ page: basePage }, use) => {
+  playwrightPage: async ({ page: basePage }, use) => {
     page = basePage
     await page.goto('/')
-    let loginPage = new LoginPage(page)
+    let playwrightPage = new PlaywrightPage(page)
     // Do login actions
-    await loginPage.login()
+    await use(playwrightPage);
+  },
+  user1: async ({ browser }, use) => {
+    let context = await browser.newContext({ storageState: 'user1.json' })
+    let page = await context.newPage()
+    await page.goto('/signin')
+    let loginPage = new LoginPage(page)
+    // Move the credentials to .env later
+    await loginPage.login("teja1@testing.com", "teja1@testing.com")
+    await context.storageState({ path: 'user1.json' });
+    await use(loginPage);
+  },
+  user2: async ({ browser }, use) => {
+    let context = await browser.newContext({ storageState: 'user2.json' })
+    let page = await context.newPage()
+    await page.goto('/signin')
+    let loginPage = new LoginPage(page)
+    // Move the credentials to .env later
+    await loginPage.login("teja2@testing.com", "teja2@testing.com")
+    await context.storageState({ path: 'state.json' });
     await use(loginPage);
   }
 });

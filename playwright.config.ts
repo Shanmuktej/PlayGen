@@ -8,16 +8,23 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'retain-on-failure',
-    baseURL: 'https://playwright.dev'
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'LetCode',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://letcode.in',
+      },
+      grep: /@letcode/
     },
     {
-      name: 'edge',
-      use: { ...devices['Desktop Edge'] },
+      name: 'Playwright',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://playwright.dev'
+      },
+      grep: /@playwright/
     },
   ],
 });

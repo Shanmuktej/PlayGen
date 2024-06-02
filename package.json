@@ -9,7 +9,11 @@
     "headless": "npx playwright test",
     "report": "npx playwright show-report",
     "codegen": "npx playwright codegen",
-    "setup": "npm i && npm i --save-dev @types/node"
+    "setup": "npm i && npm i --save-dev @types/node && npx playwright install",
+    "playwright": "npx playwright test --project=playwright",
+    "letcode": "npx playwright test --project=LetCode",
+    "playwright:headed": "npx playwright test --headed --project=playwright",
+    "letcode:headed": "npx playwright test --headed --project=LetCode"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +22,6 @@
     "@playwright/test": "^1.42.1"
   },
   "devDependencies": {
-    "@types/node": "^20.12.12"
+    "@types/node": "^20.13.0"
   }
 }

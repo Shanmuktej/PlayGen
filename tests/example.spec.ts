@@ -1,26 +1,15 @@
 import { scenario } from "@utils/fixtures";
-import { clickElement, fillInput, getElementText, goto, waitForSelector } from "@utils/generics";
 
 scenario.describe('Basic usage of the framework', () => {
-  scenario('To use click element', async ({ login }) => {
-    await goto("https://playwright.dev/")
-    let text = await getElementText('.getStarted_Sjon')
-    console.log(text)
-    await clickElement('link', 'Get Started')
+  scenario('Testing Links, Labels, Placeholders', { tag: '@playwright' }, async ({ playwrightPage }) => {
+    await playwrightPage.verifyNavigation()
   });
-  scenario('Waiting for selector', async ({ page }) => {
-    await goto("/")
-    await goto("/docs/intro")
-    await waitForSelector('h1:has-text("Installation")', 2000)
-  });
-  scenario('Testing Links, Labels, Placeholders', async ({ page }) => {
-    await clickElement('link', 'Get started')
-    await clickElement('label', 'Search')
-    await fillInput({ findElementBy: 'placeholder', locatorOrLabel: 'Search docs', inputValue: 'Xpath' });
-    await clickElement('link', 'XPath locator​ Other locators');
-    await clickElement('link', 'Test configuration');
-    await clickElement('label', 'Switch between dark and light');
-    await clickElement('link', 'Command line');
-    await clickElement('link', 'Writing test');
+  scenario('Multi User Contexts', { tag: '@letcode' }, async ({ user1, user2 }) => {
+    let user1Page = user1.page
+    let user2Page = user2.page
+    await user1Page.goto("https://playwright.dev/")
+    await user2Page.goto("https://playwright.dev/")
+    await user1Page.click('text=Get Started')
+    await user2Page.click('text=Get Started')
   });
 })
