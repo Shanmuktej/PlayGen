@@ -345,7 +345,7 @@ export class Generics {
         })
         return response!
     }
-    public async mockAPI(api: string, json: Array<Object>) {
+    protected async mockAPI(api: string, json: Array<Object>) {
         let response: Response
         await step(`Mocking Data for API: ${api}`, async () => {
             await this.page.route(new RegExp(api), async route => {
