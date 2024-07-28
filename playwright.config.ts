@@ -26,5 +26,13 @@ export default defineConfig({
       },
       grep: /@playwright/
     },
+    {
+      name: 'API',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://demo.playwright.dev/api-mocking/'
+      },
+      grep: /@api/
+    },
   ],
 });

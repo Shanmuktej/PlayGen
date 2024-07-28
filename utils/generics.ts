@@ -24,6 +24,11 @@ export class Generics {
     protected async pause() {
         await this.page.pause()
     }
+    protected async goto(url: string) {
+        await step(`Go to url: ${url}`, async () => {
+            await this.page.goto(url)
+        })
+    }
     protected async reload() {
         await step('Reloading the page', async () => {
             await this.page.reload({ waitUntil: 'load' })
@@ -179,7 +184,7 @@ export class Generics {
         })
     }
     protected async verifyIfTextIsVisible(hasText: string, exact?: 'exact' | 'non-exact', onPopup?: 'onPopup') {
-        await step(`Verifying if element with text:${hasText}`, async () => {
+        await step(`Verifying if element with text: ${hasText}`, async () => {
             let textIsVisible = false
             if (onPopup === 'onPopup') {
                 textIsVisible = await this.page.locator('.modal').getByText(hasText, { exact: exact === 'exact' }).isVisible()
@@ -337,6 +342,15 @@ export class Generics {
         await step(`Waiting for success response: ${api}`, async () => {
             response = await this.page.waitForResponse(new RegExp(api), { timeout: timeout ?? 30000 })
             expect(response.status(), `Expected API: ${api} to be successful but found error: ${response.text}`).toBeLessThan(300)
+        })
+        return response!
+    }
+    public async mockAPI(api: string, json: Array<Object>) {
+        let response: Response
+        await step(`Mocking Data for API: ${api}`, async () => {
+            await this.page.route(new RegExp(api), async route => {
+                await route.fulfill({ json });
+            })
         })
         return response!
     }
